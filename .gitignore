@@ -1,0 +1,7 @@
+*.py[cod]
+*.egg
+*.egg-info
+dist
+build
+eggs
+pip-log.txt
