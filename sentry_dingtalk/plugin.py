@@ -102,28 +102,27 @@ class DingtalkPlugin(CorePluginMixin, notify.NotificationPlugin):
 
     def notify_users(self, group, event, fail_silently=False): 
         url = self.get_webhook_urls(group.project)
-        project = event.project
-        level = group.get_level_display().upper()
+        project = group.project.name
+        level = group.get_level_display()
+        culprit = group.culprit
         link = group.get_absolute_url()
         server_name = event.get_tag('server_name')
-        try:
-            exception = event.get_interfaces()['sentry.interfaces.Exception'].to_string(event)
-            msg = exception.replace('  ', '&emsp;').replace('\n', '</br>')
-        except KeyError:
-            msg = event.error()
+        msg = event.get_legacy_message()
+
         data = {
             "msgtype": "markdown",
             "markdown": {
-                "title": '{project_name}:{level}'.format(
-                    project_name=project,
-                    level=level,
-                ),
-                "text": '''## {project_name}@{server_name}:{level}
-{msg}
-> [view]({link})
+                "title": msg,
+                "text": '''**Project:** {project_name}
+**Server:** {server_name}
+**Level:** {level}
+**Culprit:** {culprit}
+**URL:** [{link}]({link})
+> {msg}
                 '''.format(
                     project_name=project,
                     level=level,
+                    culprit=culprit,
                     msg=msg,
                     server_name=server_name,
                     link=link,
