@@ -113,12 +113,12 @@ class DingtalkPlugin(CorePluginMixin, notify.NotificationPlugin):
             "msgtype": "markdown",
             "markdown": {
                 "title": msg,
-                "text": '''**Project:** {project_name}
-**Server:** {server_name}
-**Level:** {level}
-**Culprit:** {culprit}
-**URL:** [{link}]({link})
-> {msg}
+                "text": '''### {msg}\n
+**Project:** {project_name}\n
+**Server:** {server_name}\n
+**Level:** {level}\n
+**Culprit:** {culprit}\n
+**URL:** [{link}]({link})\n
                 '''.format(
                     project_name=project,
                     level=level,
