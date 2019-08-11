@@ -100,7 +100,8 @@ class DingtalkPlugin(CorePluginMixin, notify.NotificationPlugin):
             group.id,
         ]))
 
-    def notify_users(self, group, event, fail_silently=False): 
+    def notify_users(self, group, event): 
+        fail_silently = kwargs.get('fail_silently',False)
         url = self.get_webhook_urls(group.project)
         project = group.project.name
         level = group.get_level_display()
